@@ -9,7 +9,6 @@ export default function ContactForm() {
         <section className="mb-32">
           <div className="flex justify-center">
             <div className="text-center md:max-w-xl lg:max-w-3xl">
-              {/* <h2 className="mb-12 px-6 text-3xl font-bold">Contact us</h2> */}
               <Heading title="Contact Me" text="LET’S Talk About Ideas" />
             </div>
           </div>
