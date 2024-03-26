@@ -1,48 +1,58 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Section from "./Shared/Section";
 import Heading from "./Shared/Heading";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Skills() {
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    async function fetchSkills() {
+      try {
+        const res = await fetch(
+          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
+        );
+        const data = await res.json();
+        setSkills(data.user.skills);
+      } catch (error) {
+        console.error("Error fetching skills:", error);
+      }
+    }
+
+    fetchSkills();
+  }, []);
+
   return (
     <Section>
       <Heading title="PROFESSIONAL SKILLS" text="My Talent" />
-      {/* First Card */}
-      <div className="grid grid-cols-3 gap-5 m-4">
-        {[1, 2, 3, 4, 5].map((index) => (
-          <motion.div
-            key={index}
-            className="bg-white shadow-md p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
+      {/* Mapping over the skills array to render each skill */}
+      <div className="grid my-10 gap-4 grid-col-1 lg:grid-cols-6 md:grid-cols-2 slide-in mx-5">
+        {skills.map((skill: any) => (
+          <div
+            key={skill._id}
+            className="py-4 flex flex-col items-center justify-center sm:justify-start gap-4 bg-gray-50 dark:bg-gray-400 dark:hover:bg-gray-300 hover:bg-white dark:bg-darkPrimary hover:dark:bg-darkSecondary border rounded-sm border-gray-300 dark:border-neutral-700"
           >
-            {/* Top order */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="rounded-full overflow-hidden flex-shrink-0">
-                  <Image
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXx0M2AThmX4gCUx8_9VJiSIxvuW9xeRwKSEOdm3celw&s"
-                    alt="Programming"
-                    width={50}
-                    height={50}
-                  />
-                </div>
-                <p className="font-semibold text-gray-800 truncate max-w-[150px]">
-                  React
-                </p>
-              </div>
-              <p className="text-gray-600">98%</p>
+            <div className="relative transition group-hover:scale-110 sm:group-hover:scale-100 select-none pointer-events-none">
+              {/* Using the URL from the API response for the image */}
+              <Avatar>
+                <AvatarImage src={skill.image.url} />
+                <AvatarFallback>{skill.name}</AvatarFallback>
+              </Avatar>
             </div>
-
-            {/* Description */}
-            <p className="text-gray-700 mt-2 truncate max-w-[300px]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatibus dolorum maxime reiciendis,
-            </p>
-          </motion.div>
+            {/* <p className="text-sm md:text-base font-semibold select-none pointer-events-none">
+              {skill.name}
+            </p> */}
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight dark:text-black">
+              {skill.name}
+            </h4>
+            <Progress
+              value={skill.percentage}
+              className="h-2 w-24 bg-sky-600"
+            />
+          </div>
         ))}
       </div>
     </Section>

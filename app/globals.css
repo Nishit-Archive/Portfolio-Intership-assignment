@@ -151,3 +151,8 @@
   text-transform: uppercase;
   letter-spacing: 0.05em; /* Equivalent to tracking-wider */
 }
+
+.slide-in,
+.slide-out {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
