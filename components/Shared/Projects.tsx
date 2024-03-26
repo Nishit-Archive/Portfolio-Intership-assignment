@@ -1,132 +1,167 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Section from "./Section";
 import Heading from "./Heading";
 import { Button } from "../ui/button";
-import { SectionHeader } from "./SectionHeader";
+import Image from "next/image";
+import { X } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 export default function Projects() {
-  const [toggle, setToggle] = React.useState(false);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [techStacks, setTechStacks] = useState([]);
+  const [selectedTechStack, setSelectedTechStack] = useState("");
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [toggle, setToggle] = useState(false); // State to control modal visibility
 
-  const toggleModal = () => {
-    setToggle(!toggle);
+  useEffect(() => {
+    async function fetchSkills() {
+      try {
+        const res = await fetch(
+          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
+        );
+        const data = await res.json();
+        setData(data.user.projects);
+        setFilteredData(data.user.projects);
+
+        // Extract unique tech stacks
+        const techs = new Set();
+        data.user.projects.forEach((project: any) => {
+          project.techStack.forEach((tech: any) => {
+            techs.add(tech.trim());
+          });
+        });
+        setTechStacks([...techs]);
+      } catch (error) {
+        console.error("Error fetching skills:", error);
+      }
+    }
+
+    fetchSkills();
+  }, []);
+
+  useEffect(() => {
+    if (selectedTechStack === "") {
+      setFilteredData(data);
+    } else {
+      const filtered = data.filter((project: any) =>
+        project.techStack
+          .map((tech: any) => tech.trim())
+          .includes(selectedTechStack)
+      );
+      setFilteredData(filtered);
+    }
+  }, [selectedTechStack, data]);
+
+  const toggleModal = (project = null) => {
+    setSelectedProject(project); // Set the selected project or clear it
+    setToggle(!toggle); // Toggle the modal visibility
   };
 
   return (
     <Section>
       <Heading title="Projects" />
 
-      <div className="flex items-center justify-center">
-        <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400">
-          <li className="me-2">
-            <a
-              href="#"
-              className="inline-block px-4 py-3 text-white bg-blue-600 rounded-lg active"
-              aria-current="page"
-            >
-              Tab 1
-            </a>
-          </li>
-          <li className="me-2">
-            <a
-              href="#"
-              className="inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white"
-            >
-              Tab 2
-            </a>
-          </li>
-          <li className="me-2">
-            <a
-              href="#"
-              className="inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white"
-            >
-              Tab 3
-            </a>
-          </li>
-          <li className="me-2">
-            <a
-              href="#"
-              className="inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white"
-            >
-              Tab 4
-            </a>
-          </li>
-        </ul>
+      <div className="flex flex-wrap items-center justify-center gap-2 p-4">
+        <Button onClick={() => setSelectedTechStack("")}>All</Button>
+        {techStacks.map((tech, index) => (
+          <Button key={index} onClick={() => setSelectedTechStack(tech)}>
+            {tech}
+          </Button>
+        ))}
       </div>
 
       <ul className="grid max-w-[26rem] sm:max-w-[52.5rem] mt-16 sm:mt-20 md:mt-32 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-auto gap-6 lg:gap-y-8 xl:gap-x-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
-        <li className="group relative rounded-3xl bg-slate-50 p-6 dark:bg-slate-800/80 dark:highlight-white/5 hover:bg-slate-100 dark:hover:bg-slate-700/50">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 group-hover:text-slate-800 dark:group-hover:text-slate-200">
-            Project Name
-          </h3>
-          <p className="mt-2 text-base text-slate-600 dark:text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-300">
-            Project Description
-          </p>
-          <Button className="mt-4" onClick={toggleModal}>
-            View Project
-          </Button>
-        </li>
+        {filteredData.map((project: any, index: number) => (
+          <li
+            key={index}
+            className="group relative rounded-3xl bg-slate-50 p-6 dark:bg-slate-800/80 dark:highlight-white/5 hover:bg-slate-100 dark:hover:bg-slate-700/50"
+          >
+            <Image
+              src={project?.image?.url}
+              alt="Project Image"
+              width={500}
+              height={500}
+            />
+            <div className="mt-4 mb-3 flex flex-wrap gap-2">
+              {project.techStack.map((tech: any, techIndex: number) => (
+                <Badge key={techIndex}>{tech.trim()}</Badge>
+              ))}
+            </div>
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 group-hover:text-slate-800 dark:group-hover:text-slate-200">
+              {project?.title}
+            </h3>
+            <p className="mt-2 text-base text-slate-600 dark:text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-300">
+              {project?.description}
+            </p>
+            {/* Assuming Button is a styled component or a component that accepts an onClick prop */}
+            <Button className="mt-4" onClick={() => toggleModal(project)}>
+              View Project
+            </Button>
+          </li>
+        ))}
       </ul>
-      {toggle && <Projectmodal toggleModal={toggleModal} />}
+      {toggle && (
+        <ProjectModal
+          toggleModal={toggleModal}
+          selectedProject={selectedProject}
+        />
+      )}
     </Section>
   );
 }
 
-const Projectmodal = ({ toggleModal }: any) => {
+const ProjectModal = ({ toggleModal, selectedProject }: any) => {
+  if (!selectedProject) return null; // Don't render the modal if there's no selected project
+
   return (
-    <div
-      id="static-modal"
-      data-modal-backdrop="static"
-      aria-hidden="true"
-      className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full"
-    >
-      <div className="absolute w-full h-full bg-gray-900 opacity-50"></div>
-      <div className="relative bg-white rounded-lg shadow-lg w-96">
-        <div className="flex justify-between items-center px-4 py-2 bg-gray-800 text-white">
-          <h3 className="text-lg font-semibold">Static modal</h3>
-          <button
-            type="button"
-            className="text-gray-300 hover:text-gray-200 focus:outline-none"
-            onClick={toggleModal}
+    <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full backdrop-blur-sm">
+      <div
+        className="absolute w-full h-full bg-gray-900 opacity-50"
+        onClick={() => toggleModal()}
+      ></div>
+      <div className="relative bg-white rounded-lg shadow-lg w-96 p-4">
+        <h3 className="text-lg font-semibold">{selectedProject.title}</h3>
+        <p className="mt-2">{selectedProject.description}</p>
+        {/* Live URL Button */}
+        {selectedProject.liveUrl && (
+          <a
+            href={selectedProject.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="p-4">
-          <p className="text-base text-gray-700">
-            With less than a month to go before the European Union enacts new
-            consumer privacy laws for its citizens, companies around the world
-            are updating their terms of service agreements to comply.
-          </p>
-          <p className="mt-4 text-base text-gray-700">
-            The European Union’s General Data Protection Regulation (G.D.P.R.)
-            goes into effect on May 25 and is meant to ensure a common set of
-            data rights in the European Union. It requires organizations to
-            notify users as soon as possible of high-risk data breaches that
-            could personally affect them.
-          </p>
-        </div>
-        <div className="flex justify-end px-4 py-2 bg-gray-800">
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
-            onClick={toggleModal}
+            Live URL
+          </a>
+        )}
+        {/* GitHub Repo Button */}
+        {selectedProject.liveurl && (
+          <a
+            href={selectedProject.liveurl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 ml-2 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 focus:outline-none"
           >
-            Close
-          </button>
-        </div>
+            Live Url
+          </a>
+        )}
+        {selectedProject.githuburl && (
+          <a
+            href={selectedProject.githuburl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 ml-2 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 focus:outline-none"
+          >
+            GitHub Repo
+          </a>
+        )}
+        <button
+          className="absolute top-2 right-2"
+          onClick={() => toggleModal()}
+        >
+          <X size={24} />
+        </button>
       </div>
     </div>
   );

@@ -1,149 +1,115 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Section from "./Section";
 import Heading from "./Heading";
 
 export default function TimeLine() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchSkills() {
+      try {
+        const res = await fetch(
+          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
+        );
+        const data = await res.json();
+        setData(data.user.timeline);
+      } catch (error) {
+        console.error("Error fetching skills:", error);
+      }
+    }
+
+    fetchSkills();
+  }, []);
+
+  // Function to render timeline items
+  const renderTimelineItems = (items, isEducation) => {
+    return items.map((item, index) => {
+      if (item.forEducation === isEducation) {
+        // Format the start and end dates
+        const formattedStartDate = new Date(item.startDate).toLocaleDateString(
+          "default",
+          { month: "long", year: "numeric" }
+        );
+        const formattedEndDate = item.endDate
+          ? new Date(item.endDate).toLocaleDateString("default", {
+              month: "long",
+              year: "numeric",
+            })
+          : "Present";
+
+        return (
+          <li key={index} className="mb-10 ms-4">
+            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {item.jobTitle || item.degree}
+            </h3>
+            {/* Display both start and end dates below the title */}
+            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+              {formattedStartDate} - {formattedEndDate}
+            </time>
+            <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+              {item.location}
+            </p>
+            <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+              {item.summary}
+            </p>
+            {/* Render bulletPoints if they exist */}
+            {item.bulletPoints && item.bulletPoints.length > 0 && (
+              <ul className="list-disc pl-5 mt-2 text-gray-500 dark:text-gray-400">
+                {item.bulletPoints.map((point, pointIndex) => (
+                  <li key={pointIndex}>{point}</li>
+                ))}
+              </ul>
+            )}
+            {item.link && (
+              <a
+                href={item.link}
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+              >
+                Learn more{" "}
+                <svg
+                  className="w-3 h-3 ms-2 rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"
+                  />
+                </svg>
+              </a>
+            )}
+          </li>
+        );
+      }
+      return null;
+    });
+  };
+
   return (
     <Section>
       <Heading title="TimeLine" />
-      <div className="grid grid-cols-2 gap-2 justify-center items-center">
-        <div className="bg-gray-500 flex flex-col items-center justify-center">
-          <h2 className="h2 mt-3">Work Exiprience</h2>
-          <div className="ml-4">
-            <ol className="relative border-s border-gray-200 dark:border-gray-700">
-              <li className="mb-10 ms-4">
-                <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  February 2022
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Application UI code in Tailwind CSS
-                </h3>
-                <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get access to over 20+ pages including a dashboard layout,
-                  charts, kanban board, calendar, and pre-order E-commerce &
-                  Marketing pages.
-                </p>
-                <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                >
-                  Learn more{" "}
-                  <svg
-                    className="w-3 h-3 ms-2 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M1 5h12m0 0L9 1m4 4L9 9"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li className="mb-10 ms-4">
-                <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  March 2022
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Marketing UI design in Figma
-                </h3>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p>
-              </li>
-              <li className="ms-4">
-                <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  April 2022
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  E-Commerce UI code in Tailwind CSS
-                </h3>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get started with dozens of web components and interactive
-                  elements built on top of Tailwind CSS.
-                </p>
-              </li>
-            </ol>
-          </div>
+
+      <div className="container flex items-center justify-center gap-4 p-5 ">
+        {/* Education Container */}
+        <div>
+          <h1 className="h1 text-center underline">Education</h1>
+          <ol className="flex flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
+            {renderTimelineItems(data, true)}
+          </ol>
         </div>
-        <div className="bg-gray-500 flex flex-col items-center justify-center">
-          <h2 className="h2 mt-3">Study Exiprience</h2>
-          <div className="ml-4">
-            <ol className="relative border-s border-gray-200 dark:border-gray-700">
-              <li className="mb-10 ms-4">
-                <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  February 2022
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Application UI code in Tailwind CSS
-                </h3>
-                <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get access to over 20+ pages including a dashboard layout,
-                  charts, kanban board, calendar, and pre-order E-commerce &
-                  Marketing pages.
-                </p>
-                <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                >
-                  Learn more{" "}
-                  <svg
-                    className="w-3 h-3 ms-2 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M1 5h12m0 0L9 1m4 4L9 9"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li className="mb-10 ms-4">
-                <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  March 2022
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Marketing UI design in Figma
-                </h3>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  All of the pages and components are first designed in Figma
-                  and we keep a parity between the two versions even as we
-                  update the project.
-                </p>
-              </li>
-              <li className="ms-4">
-                <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-                  April 2022
-                </time>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  E-Commerce UI code in Tailwind CSS
-                </h3>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Get started with dozens of web components and interactive
-                  elements built on top of Tailwind CSS.
-                </p>
-              </li>
-            </ol>
-          </div>
+
+        {/* Work Experience Container */}
+        <div>
+          <h1 className="h1 text-center underline">Work Experience</h1>
+          <ol className="flex flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
+            {renderTimelineItems(data, false)}
+          </ol>
         </div>
       </div>
     </Section>

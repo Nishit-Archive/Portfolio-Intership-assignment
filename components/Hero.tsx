@@ -1,8 +1,28 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Section from "./Shared/Section";
+import { url } from "inspector";
 
 export default function Hero() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchSkills() {
+      try {
+        const res = await fetch(
+          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
+        );
+        const data = await res.json();
+        setData(data);
+        console.log();
+      } catch (error) {
+        console.error("Error fetching skills:", error);
+      }
+    }
+
+    fetchSkills();
+  }, []);
+
   return (
     <Section>
       {/* <!-- Hero --> */}
@@ -14,14 +34,11 @@ export default function Hero() {
               Hello, My Name is
             </p>
             <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">
-              Baria Nishit{" "}
+              {data?.user?.about?.name}{" "}
               <span className="text-blue-600"> I am Software Developer</span>
             </h1>
             <p className="mt-3 text-lg text-gray-800 dark:text-gray-400">
-              From Los Angeles, America. I develop 3D visuals, user interfaces
-              and web applications. As a React developer with 5 years of
-              experience, I have honed my skills in JavaScript and am currently
-              learning TypeScript to expand my expertise.
+              {data?.user?.about?.description}
             </p>
 
             {/* <!-- Buttons --> */}
@@ -280,10 +297,10 @@ export default function Hero() {
           <div className="relative ms-4">
             <Image
               className="w-full rounded-md"
-              src="https://images.unsplash.com/photo-1665686377065-08ba896d16fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=700&h=800&q=80"
+              src={data?.user?.about?.avatar?.url}
               alt="Image Description"
-              width={400}
-              height={500}
+              width={300}
+              height={200}
             />
             <div className="absolute inset-0 -z-[1] bg-gradient-to-tr from-gray-200 via-white/0 to-white/0 size-full rounded-md mt-4 -mb-4 me-4 -ms-4 lg:mt-6 lg:-mb-6 lg:me-6 lg:-ms-6 dark:from-slate-800 dark:via-slate-900/0 dark:to-slate-900/0"></div>
 
