@@ -5,6 +5,7 @@ import Heading from "./Shared/Heading";
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SectionHeader } from "./Shared/SectionHeader";
 
 export default function Skills() {
   const [skills, setSkills] = useState([]);
@@ -28,6 +29,8 @@ export default function Skills() {
   return (
     <Section>
       <Heading title="PROFESSIONAL SKILLS" text="My Talent" />
+      {/* <SectionHeader title="PROFESSIONAL SKILLS" dir="l" /> */}
+
       {/* Mapping over the skills array to render each skill */}
       <div className="grid my-10 gap-4 grid-col-1 lg:grid-cols-6 md:grid-cols-2 slide-in mx-5">
         {skills.map((skill: any) => (

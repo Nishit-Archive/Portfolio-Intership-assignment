@@ -3,6 +3,7 @@ import React from "react";
 import Section from "./Section";
 import Heading from "./Heading";
 import { Button } from "../ui/button";
+import { SectionHeader } from "./SectionHeader";
 
 export default function Projects() {
   const [toggle, setToggle] = React.useState(false);
@@ -71,7 +72,7 @@ export default function Projects() {
   );
 }
 
-const Projectmodal = ({ toggleModal }) => {
+const Projectmodal = ({ toggleModal }: any) => {
   return (
     <div
       id="static-modal"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Section from "./Shared/Section";
 import Heading from "./Shared/Heading";
 import { Contact, Home, Mail } from "lucide-react";
+import { SectionHeader } from "./Shared/SectionHeader";
 
 interface User {
   about: {

@@ -19,6 +19,7 @@ export default function page() {
       <Services />
       <Skills />
       <TimeLine />
+
       <Projects />
       <SliderTestimonial />
       <ContactForm />
