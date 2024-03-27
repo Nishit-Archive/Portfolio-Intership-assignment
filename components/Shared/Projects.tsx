@@ -6,7 +6,6 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { Meteors } from "../ui/meteors";
 
 export default function Projects() {
   const [data, setData] = useState<any[]>([]);
