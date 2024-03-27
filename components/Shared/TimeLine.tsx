@@ -40,22 +40,20 @@ export default function TimeLine() {
         return (
           <li key={index} className="mb-10 ms-4">
             <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white">
               {item.jobTitle || item.degree}
             </h3>
-            {/* Display both start and end dates below the title */}
-            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+            <time className="mb-1 text-xs sm:text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
               {formattedStartDate} - {formattedEndDate}
             </time>
-            <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+            <p className="text-sm sm:text-base font-normal text-gray-500 dark:text-gray-400">
               {item.location}
             </p>
-            <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+            <p className="text-sm sm:text-base font-normal text-gray-500 dark:text-gray-400">
               {item.summary}
             </p>
-            {/* Render bulletPoints if they exist */}
             {item.bulletPoints && item.bulletPoints.length > 0 && (
-              <ul className="list-disc pl-5 mt-2 text-gray-500 dark:text-gray-400">
+              <ul className="list-disc pl-5 mt-2 text-sm sm:text-base text-gray-500 dark:text-gray-400">
                 {item.bulletPoints.map((point, pointIndex) => (
                   <li key={pointIndex}>{point}</li>
                 ))}
@@ -64,7 +62,7 @@ export default function TimeLine() {
             {item.link && (
               <a
                 href={item.link}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                className="inline-flex items-center px-4 py-2 text-xs sm:text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
               >
                 Learn more{" "}
                 <svg
@@ -95,19 +93,23 @@ export default function TimeLine() {
     <Section>
       <Heading title="TimeLine" />
 
-      <div className="container flex items-center justify-center gap-4 p-5 ">
+      <div className="container flex flex-col sm:flex-row items-center justify-center gap-4 p-5 ">
         {/* Education Container */}
-        <div>
-          <h1 className="h1 text-center underline">Education</h1>
-          <ol className="flex flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
+        <div className="w-full">
+          <h1 className="h1 text-center underline text-xs sm:text-sm md:text-base lg:text-lg">
+            Education
+          </h1>
+          <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
             {renderTimelineItems(data, true)}
           </ol>
         </div>
 
         {/* Work Experience Container */}
-        <div>
-          <h1 className="h1 text-center underline">Work Experience</h1>
-          <ol className="flex flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
+        <div className="w-full">
+          <h1 className="h1 text-center underline text-xs sm:text-sm md:text-base lg:text-lg">
+            Work Experience
+          </h1>
+          <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
             {renderTimelineItems(data, false)}
           </ol>
         </div>

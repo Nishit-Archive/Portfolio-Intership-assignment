@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { Meteors } from "../ui/meteors";
 
 export default function Projects() {
   const [data, setData] = useState<any[]>([]);
@@ -121,7 +122,7 @@ const ProjectModal = ({ toggleModal, selectedProject }: any) => {
         className="absolute w-full h-full bg-gray-900 opacity-50"
         onClick={() => toggleModal()}
       ></div>
-      <div className="relative bg-white rounded-lg shadow-lg w-96 p-4">
+      <div className="relative bg-white dark:bg-gray-600 rounded-lg shadow-lg w-96 p-4">
         <h3 className="text-lg font-semibold">{selectedProject.title}</h3>
         <p className="mt-2">{selectedProject.description}</p>
         {/* Live URL Button */}

@@ -68,7 +68,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, indec) => (
             <SwiperSlide key={indec}>
               <div className="swiper-slide">
-                <div className="group bg-white border border-solid border-gray-300 flex justify-between flex-col rounded-xl p-6 transition-all duration-500  w-full mx-auto hover:border-indigo-600 slide_active:border-indigo-600 hover:shadow-sm">
+                <div className="group bg-white dark:bg-gray-500 border border-solid border-gray-300 flex justify-between flex-col rounded-xl p-6 transition-all duration-500  w-full mx-auto hover:border-indigo-600 slide_active:border-indigo-600 hover:shadow-sm">
                   <div className="">
                     <div className="flex items-center mb-7 gap-2 text-amber-500 transition-all duration-500  ">
                       <svg
@@ -86,7 +86,7 @@ export default function Testimonials() {
                         4.9
                       </span>
                     </div>
-                    <p className="text-base text-gray-600 leading-6  transition-all duration-500 pb-8 group-hover:text-gray-800 slide_active:text-gray-800">
+                    <p className="text-base text-gray-600 dark:text-gray-300 leading-6  transition-all duration-500 pb-8 group-hover:text-gray-800 dark:hover-gray-500 slide_active:text-gray-800">
                       {testimonial?.review}
                     </p>
                   </div>

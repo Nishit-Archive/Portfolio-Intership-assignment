@@ -4,7 +4,7 @@ import Section from "./Shared/Section";
 import { TextGenerateEffect } from "./ui/text-generate-effect";
 import { MaskContainer } from "./ui/svg-mask-effect";
 export default function Hero() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     async function fetchSkills() {
@@ -34,7 +34,7 @@ export default function Hero() {
               Hello, My Name is
             </p>
             <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">
-              {data?.user?.about?.name}{" "}
+              {data?.user?.about?.name} <br />
               <span className="text-blue-600"> I am Software Developer</span>
             </h1>
             <p className="mt-3 text-lg text-gray-800 dark:text-gray-400">
@@ -45,7 +45,7 @@ export default function Hero() {
             {/* <!-- Buttons --> */}
             <div className="mt-7 grid gap-3 w-full sm:inline-flex">
               <a
-                className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] transition duration-200 ease-linear"
                 href="#"
               >
                 Download CV
@@ -70,6 +70,8 @@ export default function Hero() {
               >
                 Contact me
               </a>
+
+              {/* // Button code */}
             </div>
             {/* <!-- End Buttons --> */}
 
@@ -429,21 +431,6 @@ export default function Hero() {
           {/* <!-- End Col --> */}
         </div>
         {/* <!-- End Grid --> */}
-        <div className="h-[40rem] w-full flex items-center justify-center  overflow-hidden">
-          <MaskContainer
-            revealText={
-              <p className="max-w-4xl mx-auto text-slate-800 text-center  text-4xl font-bold">
-                The first rule of MRR Club is you do not talk about MRR Club.
-                The second rule of MRR Club is you DO NOT talk about MRR Club.
-              </p>
-            }
-            className="h-[40rem] border rounded-md"
-          >
-            The first rule of <span className="text-red-500">MRR Club</span> is
-            you do not talk about MRR Club. The second rule of MRR Club is you
-            DO NOT talk about <span className="text-red-500">MRR Club</span>.
-          </MaskContainer>
-        </div>
       </div>
 
       {/* <!-- End Hero --> */}

@@ -222,53 +222,17 @@
   overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .section-wrapper {
-    padding: 7.2rem 2.4rem;
-  }
+.title {
+  font-size: 10rem;
 }
 
-.modal {
-  @apply fixed z-[100000000] h-screen backdrop-blur-md overflow-y-scroll flex justify-center cursor-pointer px-[1.2rem] py-[4.8rem] top-0 inset-x-0;
-  background: var(--bg-opaque);
-}
-.modalCard {
-  @apply w-full max-w-[700px] h-fit overflow-hidden shadow-[0px_5px_15px_rgba(0,0,0,0.1)] cursor-auto rounded-[1.2rem];
-  background: var(--background-light);
-}
-
-.modalImage {
-  @apply w-full;
-}
-
-.modalContent {
-  @apply p-[2.4rem];
-}
-.modalContent h4 {
-  @apply text-[length:var(--text-lg)];
-}
-.modalTech {
-  @apply flex flex-wrap gap-[1.2rem] text-[length:var(--text-xs)] text-[color:var(--brand)] mt-[0.2rem] mb-[2.4rem] mx-0;
-}
-.suppliedContent {
-  @apply flex flex-col gap-[1.2rem] text-[length:var(--text-xs)];
-}
-.modalFooter {
-  @apply mt-[2.4rem];
-}
-.linksText {
-  @apply font-[bold] text-[length:var(--text-md)] mb-[0.8rem];
-}
-.linksText span {
-  @apply text-[color:var(--brand)];
-}
-.links {
-  @apply flex items-center gap-[1.2rem];
-}
-.links a {
-  @apply flex items-center gap-[0.4rem] text-[length:var(--text-xs)] text-[color:var(--brand)] hover:underline;
-}
-.closeModalBtn {
-  @apply text-[color:var(--text)] text-[length:var(--text-md)] absolute cursor-pointer border-[none] right-[1.2rem] top-[1.2rem];
-  background: none;
+.cursor {
+  background-color: #111;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }
