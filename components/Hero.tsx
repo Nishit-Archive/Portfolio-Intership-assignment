@@ -4,7 +4,7 @@ import Section from "./Shared/Section";
 import { url } from "inspector";
 
 export default function Hero() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchSkills() {
@@ -58,7 +58,7 @@ export default function Hero() {
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinejoin="round"
                 >
                   <path d="m9 18 6-6-6-6" />
                 </svg>

@@ -8,9 +8,9 @@ import { X } from "lucide-react";
 import { Badge } from "../ui/badge";
 
 export default function Projects() {
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [techStacks, setTechStacks] = useState([]);
+  const [data, setData] = useState<any[]>([]);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [techStacks, setTechStacks] = useState<any[]>([]);
   const [selectedTechStack, setSelectedTechStack] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
   const [toggle, setToggle] = useState(false); // State to control modal visibility
@@ -61,7 +61,7 @@ export default function Projects() {
 
   return (
     <Section>
-      <Heading title="Projects" />
+      <Heading title="Projects" text="Our Build" />
 
       <div className="flex flex-wrap items-center justify-center gap-2 p-4">
         <Button onClick={() => setSelectedTechStack("")}>All</Button>

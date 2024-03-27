@@ -7,11 +7,12 @@ import SwiperCore, { Autoplay, Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import Image from "next/image";
+import Heading from "./Heading";
 
 SwiperCore.use([Autoplay, Pagination]);
 
 export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState([]);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchTestimonials() {
@@ -34,12 +35,7 @@ export default function Testimonials() {
     <section className="py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
-          <span className="text-sm text-gray-500 font-medium text-center block mb-2">
-            TESTIMONIAL
-          </span>
-          <h2 className="text-4xl text-center font-bold text-gray-900">
-            What our happy user says!
-          </h2>
+          <Heading title="Testimonials" text="What our happy user says!" />
         </div>
         <Swiper
           slidesPerView={1}
