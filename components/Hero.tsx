@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Section from "./Shared/Section";
-import { url } from "inspector";
-
+import { TextGenerateEffect } from "./ui/text-generate-effect";
+import { MaskContainer } from "./ui/svg-mask-effect";
 export default function Hero() {
   const [data, setData] = useState<any[]>([]);
 
@@ -39,6 +39,7 @@ export default function Hero() {
             </h1>
             <p className="mt-3 text-lg text-gray-800 dark:text-gray-400">
               {data?.user?.about?.description}
+              {/* <TextGenerateEffect words={data?.user?.about?.description} /> */}
             </p>
 
             {/* <!-- Buttons --> */}
@@ -428,7 +429,23 @@ export default function Hero() {
           {/* <!-- End Col --> */}
         </div>
         {/* <!-- End Grid --> */}
+        <div className="h-[40rem] w-full flex items-center justify-center  overflow-hidden">
+          <MaskContainer
+            revealText={
+              <p className="max-w-4xl mx-auto text-slate-800 text-center  text-4xl font-bold">
+                The first rule of MRR Club is you do not talk about MRR Club.
+                The second rule of MRR Club is you DO NOT talk about MRR Club.
+              </p>
+            }
+            className="h-[40rem] border rounded-md"
+          >
+            The first rule of <span className="text-red-500">MRR Club</span> is
+            you do not talk about MRR Club. The second rule of MRR Club is you
+            DO NOT talk about <span className="text-red-500">MRR Club</span>.
+          </MaskContainer>
+        </div>
       </div>
+
       {/* <!-- End Hero --> */}
     </Section>
   );
