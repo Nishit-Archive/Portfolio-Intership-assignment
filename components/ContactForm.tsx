@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Section from "./Shared/Section";
 import Heading from "./Shared/Heading";
 import { FaHome, FaEnvelope, FaUserShield, FaPhone } from "react-icons/fa";
-
+import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
 import { Label } from "./ui/lable";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import axios from "axios";
+
 interface User {
   about: {
     phoneNumber: string;
+    address?: string; // Assuming address is also part of the about object
   };
 }
 
@@ -22,28 +20,20 @@ interface Data {
   user: User;
 }
 
-export default function ContactForm() {
-  const [data, setData] = useState<any>(null);
+interface ContactFormProps {
+  usersData: Data | null; // Assuming this is the structure, adjust as necessary
+}
 
-  useEffect(() => {
-    async function fetchSkills() {
-      try {
-        const res = await fetch(
-          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
-        );
-        const data = await res.json();
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching skills:", error);
-      }
-    }
-
-    fetchSkills();
-  }, []);
+export default function ContactForm({ usersData }: ContactFormProps) {
+  const fadeIn = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 1 }, // Adjust the duration as needed
+  };
 
   return (
     <Section className="dark:bg-[#0e1118] ">
-      <div className="container my-12 mx-auto px-2 md:px-4">
+      <motion.div {...fadeIn} className="container my-12 mx-auto px-2 md:px-4">
         <section className="mb-32">
           <div className="flex justify-center">
             <div className="text-center md:max-w-xl lg:max-w-3xl">
@@ -96,7 +86,7 @@ export default function ContactForm() {
                     <div className="ml-6 grow">
                       <p className="mb-2 font-bold">Address</p>
                       <p className="text-neutral-500">
-                        {data?.user?.about?.address}
+                        {usersData?.user.about.address}
                       </p>
                     </div>
                   </div>
@@ -140,7 +130,7 @@ export default function ContactForm() {
                     <div className="ml-6 grow">
                       <p className="mb-2 font-bold">Phone</p>
                       <p className="text-neutral-500">
-                        {data?.user?.about?.phoneNumber}
+                        {usersData?.user.about.phoneNumber}
                       </p>
                     </div>
                   </div>
@@ -149,7 +139,7 @@ export default function ContactForm() {
             </div>
           </div>
         </section>
-      </div>
+      </motion.div>
     </Section>
   );
 }

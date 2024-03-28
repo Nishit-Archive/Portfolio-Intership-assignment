@@ -4,26 +4,40 @@ import Section from "./Shared/Section";
 import { TextGenerateEffect } from "./ui/text-generate-effect";
 import { motion } from "framer-motion";
 
-export default function Hero() {
+interface HeroProps {
+  usersData: {
+    user: {
+      about: {
+        name?: string;
+        description?: string;
+        avatar?: {
+          url: any;
+        };
+      };
+    };
+  };
+}
+
+export default function Hero({ usersData }: HeroProps) {
   const [data, setData] = useState<any>(null);
 
-  useEffect(() => {
-    async function fetchSkills() {
-      try {
-        const res = await fetch(
-          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
-        );
-        const data = await res.json();
-        setData(data);
+  // useEffect(() => {
+  //   async function fetchSkills() {
+  //     try {
+  //       const res = await fetch(
+  //         "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
+  //       );
+  //       const data = await res.json();
+  //       setData(data);
 
-        console.log();
-      } catch (error) {
-        console.error("Error fetching skills:", error);
-      }
-    }
+  //       console.log();
+  //     } catch (error) {
+  //       console.error("Error fetching skills:", error);
+  //     }
+  //   }
 
-    fetchSkills();
-  }, []);
+  //   fetchSkills();
+  // }, []);
 
   const textVariants = {
     hidden: { opacity: 0, x: -50 },
@@ -50,11 +64,11 @@ export default function Hero() {
               Hello, My Name is
             </p>
             <h1 className="block text-3xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">
-              {data?.user?.about?.name} <br />
+              {usersData?.user?.about?.name} <br />
               <span className="text-blue-600"> I am Software Developer</span>
             </h1>
             <p className="leading-7 [&:not(:first-child)]:mt-6">
-              {data?.user?.about?.description}
+              {usersData?.user?.about?.description}
               {/* <TextGenerateEffect words={data?.user?.about?.description} /> */}
             </p>
 
@@ -320,8 +334,8 @@ export default function Hero() {
             variants={imageVariants} // Apply image animation
           >
             <Image
-              className="w-full rounded-md shadow-[0_0_1000px_0] dark:shadow-gray-700/40"
-              src={data?.user?.about?.avatar?.url}
+              className="w-full rounded-md"
+              src={usersData?.user?.about?.avatar?.url}
               alt="Image Description"
               width={300}
               height={200}
