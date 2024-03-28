@@ -61,7 +61,7 @@ export default function Services({ usersData }: ServicesProps) {
               {usersData.map((service: any, index: number) => (
                 <div
                   key={service._id}
-                  className="h-auto md:h-full flex flex-col hover:shadow-[0_0_1000px_0] dark:shadow-sky-400"
+                  className="h-auto md:h-full flex flex-col "
                 >
                   <a
                     href="#"
