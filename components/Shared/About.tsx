@@ -3,9 +3,19 @@ import Section from "./Section";
 import Heading from "./Heading";
 import Image from "next/image";
 import { Facebook, Instagram, Twitter, X, Youtube } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function About() {
   const [data, setData] = useState<any>(null);
+  const textVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+  };
 
   useEffect(() => {
     async function fetchTestimonials() {
@@ -30,7 +40,12 @@ export default function About() {
       <Heading title="About" text="About Me" />
       <div>
         <section className="flex h-screen w-full">
-          <div className="flex items-center justify-center">
+          <motion.div
+            className="flex items-center justify-center"
+            initial="hidden"
+            animate="visible"
+            variants={imageVariants}
+          >
             <Image
               src={data.avatar.url}
               alt={data.name}
@@ -38,8 +53,13 @@ export default function About() {
               height={1080}
               className="w-1/2 h-full object-cover"
             />
-          </div>
-          <div className="flex-1 dark:bg-gray-900 p-12">
+          </motion.div>
+          <motion.div
+            className="flex-1 dark:bg-gray-900 p-12"
+            initial="hidden"
+            animate="visible"
+            variants={textVariants}
+          >
             <h1 className="text-5xl font-bold leading-tight">
               {data.subTitle}
             </h1>
@@ -67,7 +87,7 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
       </div>
     </Section>

@@ -2,6 +2,18 @@ import React, { useEffect, useState } from "react";
 import Section from "./Section";
 import Heading from "./Heading";
 
+interface Item {
+  forEducation: boolean;
+  jobTitle?: string;
+  degree?: string;
+  startDate: string;
+  endDate?: string;
+  location: string;
+  summary: string;
+  bulletPoints?: string[];
+  link?: string;
+}
+
 export default function TimeLine() {
   const [data, setData] = useState([]);
 
@@ -21,8 +33,7 @@ export default function TimeLine() {
     fetchSkills();
   }, []);
 
-  // Function to render timeline items
-  const renderTimelineItems = (items, isEducation) => {
+ const renderTimelineItems = (items: Item[], isEducation: boolean) => {
     return items.map((item, index) => {
       if (item.forEducation === isEducation) {
         // Format the start and end dates

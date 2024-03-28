@@ -29,7 +29,6 @@ export default function Skills() {
   return (
     <Section>
       <Heading title="PROFESSIONAL SKILLS" text="My Talent" />
-      {/* <SectionHeader title="PROFESSIONAL SKILLS" dir="l" /> */}
 
       {/* Mapping over the skills array to render each skill */}
       <div className="grid my-10 gap-4 grid-col-1 lg:grid-cols-6 md:grid-cols-2 slide-in mx-5">

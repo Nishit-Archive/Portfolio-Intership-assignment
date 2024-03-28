@@ -2,10 +2,16 @@ import Image from "next/image";
 import Heading from "./Heading";
 import Section from "./Section";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 export default function Services() {
   const [data, setData] = useState([]);
+  const controls = useAnimation();
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "-100px 0px",
+  });
 
   useEffect(() => {
     async function fetchTestimonials() {
@@ -23,11 +29,27 @@ export default function Services() {
     fetchTestimonials();
   }, []);
 
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const fadeInVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
   return (
     <Section>
       <Heading title="Services" text="MY Services" />
 
-      <div>
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={controls}
+        variants={fadeInVariants}
+      >
         <section className="bg-white dark:bg-gray-900">
           <div className="py-4 px-2 mx-auto max-w-screen-xl sm:py-4 lg:px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-full">
@@ -63,7 +85,7 @@ export default function Services() {
             </div>
           </div>
         </section>
-      </div>
+      </motion.div>
     </Section>
   );
 }

@@ -23,7 +23,7 @@ interface Data {
 }
 
 export default function ContactForm() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     async function fetchSkills() {
