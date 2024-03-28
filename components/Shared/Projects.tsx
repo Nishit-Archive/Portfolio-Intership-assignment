@@ -8,7 +8,6 @@ import { X } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { BackgroundGradient } from "../ui/background-gradient";
 
 export default function Projects() {
   const [data, setData] = useState<any[]>([]);
@@ -100,9 +99,9 @@ export default function Projects() {
 
       <ul className="grid max-w-[26rem] sm:max-w-[52.5rem] mt-16 sm:mt-20 md:mt-32 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-auto gap-6 lg:gap-y-8 xl:gap-x-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
         {filteredData.map((project: any, index: number) => (
-          <BackgroundGradient
+          <li
             key={index}
-            className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900"
+            className="group relative rounded-3xl bg-slate-50 p-6 dark:bg-slate-800/80 dark:highlight-white/5 hover:bg-slate-100 dark:hover:bg-slate-700/50"
           >
             <Image
               src={project?.image?.url}
@@ -118,14 +117,14 @@ export default function Projects() {
             <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 group-hover:text-slate-800 dark:group-hover:text-slate-200">
               {project?.title}
             </h3>
-            <p className="leading-7 [&:not(:first-child)]:mt-4">
+            <p className="mt-2 text-base text-slate-600 dark:text-slate-400 group-hover:text-slate-500 dark:group-hover:text-slate-300">
               {project?.description}
             </p>
             {/* Assuming Button is a styled component or a component that accepts an onClick prop */}
             <Button className="mt-4" onClick={() => toggleModal(project)}>
               View Project
             </Button>
-          </BackgroundGradient>
+          </li>
         ))}
       </ul>
       {toggle && (
