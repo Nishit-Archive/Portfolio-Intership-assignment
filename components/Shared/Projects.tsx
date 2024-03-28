@@ -6,6 +6,8 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 export default function Projects() {
   const [data, setData] = useState<any[]>([]);
@@ -14,6 +16,32 @@ export default function Projects() {
   const [selectedTechStack, setSelectedTechStack] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
   const [toggle, setToggle] = useState(false); // State to control modal visibility
+
+  const controls = useAnimation();
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "-100px 0px",
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const fadeInVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
+  const fadeInUpVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 0.3 }, // Delay based on index
+    },
+  };
 
   useEffect(() => {
     async function fetchSkills() {
@@ -63,14 +91,20 @@ export default function Projects() {
     <Section>
       <Heading title="Projects" text="Our Build" />
 
-      <div className="flex flex-wrap items-center justify-center gap-2 p-4">
+      <motion.div
+        className="flex flex-wrap items-center justify-center gap-2 p-4"
+        ref={ref}
+        initial="hidden"
+        animate={controls}
+        variants={fadeInVariants}
+      >
         <Button onClick={() => setSelectedTechStack("")}>All</Button>
         {techStacks.map((tech, index) => (
           <Button key={index} onClick={() => setSelectedTechStack(tech)}>
             {tech}
           </Button>
         ))}
-      </div>
+      </motion.div>
 
       <ul className="grid max-w-[26rem] sm:max-w-[52.5rem] mt-16 sm:mt-20 md:mt-32 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-auto gap-6 lg:gap-y-8 xl:gap-x-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8">
         {filteredData.map((project: any, index: number) => (
