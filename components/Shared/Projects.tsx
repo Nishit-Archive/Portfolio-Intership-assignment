@@ -9,7 +9,20 @@ import { Badge } from "../ui/badge";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-export default function Projects() {
+interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  tags: string[];
+  link: string;
+}
+
+interface ProjectsProps {
+  projectData: Project[];
+}
+
+export default function Projects({ projectData }: ProjectsProps) {
   const [data, setData] = useState<any[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [techStacks, setTechStacks] = useState<any[]>([]);
