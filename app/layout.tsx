@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Portfolio",
+  icons: ["https://cdn-icons-png.flaticon.com/512/8644/8644474.png"],
 };
 
 export default function RootLayout({
