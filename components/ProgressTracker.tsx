@@ -26,7 +26,7 @@ const ScrollProgressIndicator = () => {
 
   return (
     <motion.svg
-      className="fixed bottom-4 right-4 z-50" // Added z-50 to ensure it's above most elements
+      className="fixed bottom-4 right-4 z-50 bg-gray-200 dark:bg-slate-800 justify-between items-center rounded-full" // Added z-50 to ensure it's above most elements
       width="60"
       height="60"
       viewBox="0 0 60 60"

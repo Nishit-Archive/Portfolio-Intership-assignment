@@ -41,7 +41,7 @@ export default function Services() {
   };
 
   return (
-    <Section>
+    <Section className="dark:bg-[#12151e] bg-grid-[#2c2f38]/[0.1]">
       <Heading title="Services" text="MY Services" />
 
       <motion.div
@@ -50,13 +50,13 @@ export default function Services() {
         animate={controls}
         variants={fadeInVariants}
       >
-        <section className="bg-white dark:bg-gray-900">
+        <section className="">
           <div className="py-4 px-2 mx-auto max-w-screen-xl sm:py-4 lg:px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-full">
               {data.map((service: any, index: number) => (
                 <div
                   key={service._id}
-                  className="h-auto md:h-full flex flex-col"
+                  className="h-auto md:h-full flex flex-col hover:shadow-[0_0_1000px_0] dark:shadow-sky-400"
                 >
                   <a
                     href="#"
@@ -69,7 +69,7 @@ export default function Services() {
                       height={1960}
                       className="absolute inset-0 h-full w-full object-cover group-hover:blur-sm transition duration-500 ease-in-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-gray-900/25 to-gray-900/5"></div>
+                    <div className="absolute inset-0"></div>
                     <h3 className="z-10 text-2xl font-medium text-white absolute top-0 left-0 p-4 xs:text-xl md:text-3xl">
                       {service?.name}
                     </h3>

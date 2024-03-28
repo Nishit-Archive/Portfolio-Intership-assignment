@@ -36,11 +36,11 @@ export default function Hero() {
   };
 
   return (
-    <Section>
+    <Section className="dark:bg-[#12151e] bg-grid-[#2c2f38]/[0.1]">
       {/* <!-- Hero --> */}
       <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 mt-4">
         {/* <!-- Grid --> */}
-        <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center ">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -53,7 +53,7 @@ export default function Hero() {
               {data?.user?.about?.name} <br />
               <span className="text-blue-600"> I am Software Developer</span>
             </h1>
-            <p className="mt-3 text-lg text-gray-800 dark:text-gray-400">
+            <p className="leading-7 [&:not(:first-child)]:mt-6">
               {data?.user?.about?.description}
               {/* <TextGenerateEffect words={data?.user?.about?.description} /> */}
             </p>
@@ -320,7 +320,7 @@ export default function Hero() {
             variants={imageVariants} // Apply image animation
           >
             <Image
-              className="w-full rounded-md"
+              className="w-full rounded-md shadow-[0_0_1000px_0] dark:shadow-gray-700/40"
               src={data?.user?.about?.avatar?.url}
               alt="Image Description"
               width={300}

@@ -42,7 +42,7 @@ export default function ContactForm() {
   }, []);
 
   return (
-    <Section>
+    <Section className="dark:bg-[#0e1118] ">
       <div className="container my-12 mx-auto px-2 md:px-4">
         <section className="mb-32">
           <div className="flex justify-center">

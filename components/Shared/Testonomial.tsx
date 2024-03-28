@@ -4,16 +4,33 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import SwiperCore from "swiper/core";
-
-// Import Swiper styles
 import "swiper/css";
 import Image from "next/image";
 import Heading from "./Heading";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Section from "./Section";
 
 SwiperCore.use([Autoplay, Pagination]);
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
+  const controls = useAnimation();
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "-100px 0px",
+  });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  const fadeInVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
 
   useEffect(() => {
     async function fetchTestimonials() {
@@ -33,8 +50,14 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <Section className="dark:bg-[#11141e] bg-grid-[#2c2f38]/[0.01]">
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={controls}
+        variants={fadeInVariants}
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      >
         <div className="mb-16">
           <Heading title="Testimonials" text="What our happy user says!" />
         </div>
@@ -71,7 +94,7 @@ export default function Testimonials() {
               <div className="swiper-slide">
                 <div className="group bg-white dark:bg-gray-800 border border-solid border-gray-300 flex justify-between flex-col rounded-xl p-6 transition-all duration-500  w-full mx-auto hover:border-indigo-600 slide_active:border-indigo-600 hover:shadow-sm">
                   <div className="">
-                    <div className="flex items-center mb-7 gap-2 text-amber-500 transition-all duration-500  ">
+                    <div className=" flex items-center mb-12 gap-2 text-amber-500 transition-all duration-500  ">
                       <svg
                         className="w-5 h-5"
                         viewBox="0 0 18 17"
@@ -113,7 +136,7 @@ export default function Testimonials() {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
-    </section>
+      </motion.div>
+    </Section>
   );
 }

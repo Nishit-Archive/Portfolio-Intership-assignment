@@ -36,7 +36,7 @@ export default function About() {
   if (!data) return <div>Loading...</div>;
 
   return (
-    <Section>
+    <Section className="dark:bg-[#141820]">
       <Heading title="About" text="About Me" />
       <div>
         <section className="flex h-screen w-full">
@@ -51,19 +51,21 @@ export default function About() {
               alt={data.name}
               width={1920}
               height={1080}
-              className="w-1/2 h-full object-cover"
+              className="w-1/2 h-full object-cover shadow-[0_0_1000px_0]"
             />
           </motion.div>
           <motion.div
-            className="flex-1 dark:bg-gray-900 p-12"
+            className="flex-1 p-12"
             initial="hidden"
             animate="visible"
             variants={textVariants}
           >
-            <h1 className="text-5xl font-bold leading-tight">
+            <h1 className="block text-2xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">
               {data.subTitle}
             </h1>
-            <p className="mt-6 text-lg">{data.description}</p>
+            <p className="leading-7 [&:not(:first-child)]:mt-6">
+              {data.description}
+            </p>
             <div className="mt-6">
               <div className="mb-4">
                 <h3 className="text-lg font-semibold">Name</h3>

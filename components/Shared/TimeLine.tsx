@@ -33,7 +33,7 @@ export default function TimeLine() {
     fetchSkills();
   }, []);
 
- const renderTimelineItems = (items: Item[], isEducation: boolean) => {
+  const renderTimelineItems = (items: Item[], isEducation: boolean) => {
     return items.map((item, index) => {
       if (item.forEducation === isEducation) {
         // Format the start and end dates
@@ -101,13 +101,13 @@ export default function TimeLine() {
   };
 
   return (
-    <Section>
+    <Section className="dark:bg-[#12151e] bg-grid-[#2c2f38]/[0.1]">
       <Heading title="TimeLine" />
 
-      <div className="container flex flex-col sm:flex-row items-center justify-center gap-4 p-5 ">
+      <div className="container flex flex-col sm:flex-col items-center justify-center gap-4 p-5 ">
         {/* Education Container */}
         <div className="w-full">
-          <h1 className="h1 text-center underline text-xs sm:text-sm md:text-base lg:text-lg">
+          <h1 className="h1 lg:text-center  md:mb-4 underline    sm:text-4xl text-3xl sm:mb-4 mt-3 mb-4">
             Education
           </h1>
           <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
@@ -117,7 +117,7 @@ export default function TimeLine() {
 
         {/* Work Experience Container */}
         <div className="w-full">
-          <h1 className="h1 text-center underline text-xs sm:text-sm md:text-base lg:text-lg">
+          <h1 className="h1 lg:text-center  md:mb-4 underline  lg:text-blue-500 sm:text-red-300 sm:text-4xl text-3xl sm:mb-4 mt-3 mb-4">
             Work Experience
           </h1>
           <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
