@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { ModeToggle } from "./ModeToggle";
 import Link from "next/link";
 
@@ -20,17 +21,38 @@ const navLinks: NavLink[] = [
 ];
 
 export default function Navbar() {
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      setHasScrolled(offset > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700">
+    <header
+      className={`sticky top-0 z-50 w-full ${
+        hasScrolled
+          ? "bg-[rgba(255,255,255,0.1)] dark:bg-gray-900 backdrop-blur-lg border-b border-gray-200 dark:border-gray-600 text-black"
+          : "bg-transparent "
+      } text-sm py-3 sm:py-0 transition-all duration-300`}
+    >
       <nav
         className="relative max-w-7xl w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex items-center justify-between">
           <Link
-            className="flex-none text-xl font-semibold dark:text-white text-n-9"
-            href={`/`}
+            href="/"
             aria-label="Portfolio"
+            className="flex-none text-xl font-semibold dark:text-white text-n-9"
           >
             Portfolio
           </Link>
@@ -44,9 +66,8 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <Link
                 key={link.label}
-                className="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500"
                 href={link.href}
-                aria-current={link.ariaCurrent}
+                className="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500"
               >
                 {link.label}
               </Link>
