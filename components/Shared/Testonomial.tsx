@@ -57,6 +57,7 @@ export default function Testimonials({ usersData }: TestimonialsProps) {
         animate={controls}
         variants={fadeInVariants}
         className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        id="reviews"
       >
         <div className="mb-16">
           <Heading title="Testimonials" text="What our happy user says!" />

@@ -33,7 +33,11 @@ export default function ContactForm({ usersData }: ContactFormProps) {
 
   return (
     <Section className="dark:bg-[#0e1118] ">
-      <motion.div {...fadeIn} className="container my-12 mx-auto px-2 md:px-4">
+      <motion.div
+        {...fadeIn}
+        id="contact"
+        className="container my-12 mx-auto px-2 md:px-4"
+      >
         <section className="mb-32">
           <div className="flex justify-center">
             <div className="text-center md:max-w-xl lg:max-w-3xl">

@@ -27,6 +27,7 @@ export default function Skills({ skillsData }: SkillsProps) {
       <div className="grid my-10 gap-4 grid-col-1 lg:grid-cols-6 md:grid-cols-2 slide-in mx-5">
         {skillsData.map((skill: any) => (
           <div
+            id="skills"
             key={skill._id}
             className="py-4 flex flex-col items-center justify-center sm:justify-start gap-4 bg-gray-50 dark:bg-slate-700 dark:hover:bg-gray-700 hover:bg-white dark:bg-darkPrimary dark:border-b hover:dark:border-sky-400 hover:dark:bg-darkSecondary border rounded-sm border-gray-300 dark:border-neutral-700"
           >

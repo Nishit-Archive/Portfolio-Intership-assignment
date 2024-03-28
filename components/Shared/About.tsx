@@ -19,7 +19,7 @@ export default function About({ userData }: any) {
   return (
     <Section className="dark:bg-[#141820]">
       <Heading title="About" text="About Me" />
-      <div>
+      <div id="about">
         <section className="flex h-screen w-full">
           <motion.div
             className="flex items-center justify-center"

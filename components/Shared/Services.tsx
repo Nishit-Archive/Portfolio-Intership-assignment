@@ -53,6 +53,7 @@ export default function Services({ usersData }: ServicesProps) {
         initial="hidden"
         animate={controls}
         variants={fadeInVariants}
+        id="services"
       >
         <section className="">
           <div className="py-4 px-2 mx-auto max-w-screen-xl sm:py-4 lg:px-6">

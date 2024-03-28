@@ -87,8 +87,8 @@ export default function Projects({ projectData }: ProjectsProps) {
   }, [selectedTechStack, data]);
 
   const toggleModal = (project = null) => {
-    setSelectedProject(project); // Set the selected project or clear it
-    setToggle(!toggle); // Toggle the modal visibility
+    setSelectedProject(project);
+    setToggle(!toggle);
   };
 
   return (
@@ -101,6 +101,7 @@ export default function Projects({ projectData }: ProjectsProps) {
         initial="hidden"
         animate={controls}
         variants={fadeInVariants}
+        id="projects"
       >
         <Button onClick={() => setSelectedTechStack("")}>All</Button>
         {techStacks.map((tech, index) => (
