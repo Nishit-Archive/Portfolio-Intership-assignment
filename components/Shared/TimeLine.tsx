@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Section from "./Section";
 import Heading from "./Heading";
+import { log } from "console";
 
 interface Item {
   forEducation: boolean;
@@ -14,25 +15,11 @@ interface Item {
   link?: string;
 }
 
-export default function TimeLine() {
-  const [data, setData] = useState([]);
+interface TimeLineProps {
+  userData: Item[];
+}
 
-  useEffect(() => {
-    async function fetchSkills() {
-      try {
-        const res = await fetch(
-          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
-        );
-        const data = await res.json();
-        setData(data.user.timeline);
-      } catch (error) {
-        console.error("Error fetching skills:", error);
-      }
-    }
-
-    fetchSkills();
-  }, []);
-
+export default function TimeLine({ userData }: TimeLineProps) {
   const renderTimelineItems = (items: Item[], isEducation: boolean) => {
     return items.map((item, index) => {
       if (item.forEducation === isEducation) {
@@ -111,7 +98,7 @@ export default function TimeLine() {
             Education
           </h1>
           <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
-            {renderTimelineItems(data, true)}
+            {renderTimelineItems(userData, true)}
           </ol>
         </div>
 
@@ -121,7 +108,7 @@ export default function TimeLine() {
             Work Experience
           </h1>
           <ol className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-3 relative border-s border-gray-500 dark:border-gray-700">
-            {renderTimelineItems(data, false)}
+            {renderTimelineItems(userData, false)}
           </ol>
         </div>
       </div>

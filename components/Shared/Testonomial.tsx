@@ -13,8 +13,25 @@ import Section from "./Section";
 
 SwiperCore.use([Autoplay, Pagination]);
 
-export default function Testimonials() {
-  const [testimonials, setTestimonials] = useState<any[]>([]);
+interface Testimonial {
+  review: string;
+  image: { url: string };
+  name: string;
+  position: string;
+}
+
+interface TestimonialsProps {
+  usersData: {
+    map(
+      arg0: (testimonial: any, indec: any) => React.JSX.Element
+    ): React.ReactNode;
+    user: {
+      testimonials: Testimonial[];
+    };
+  };
+}
+
+export default function Testimonials({ usersData }: TestimonialsProps) {
   const controls = useAnimation();
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -31,23 +48,6 @@ export default function Testimonials() {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
-
-  useEffect(() => {
-    async function fetchTestimonials() {
-      try {
-        const response = await fetch(
-          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
-        );
-        const data = await response.json();
-        setTestimonials(data.user.testimonials);
-        console.log(data.user.testimonials);
-      } catch (error) {
-        console.error("Error fetching testimonials:", error);
-      }
-    }
-
-    fetchTestimonials();
-  }, []);
 
   return (
     <Section className="dark:bg-[#11141e] bg-grid-[#2c2f38]/[0.01]">
@@ -89,7 +89,7 @@ export default function Testimonials() {
           }}
           className="mySwiper"
         >
-          {testimonials.map((testimonial, indec) => (
+          {usersData.map((testimonial, indec) => (
             <SwiperSlide key={indec}>
               <div className="swiper-slide">
                 <div className="group bg-white dark:bg-gray-800 border border-solid border-gray-300 flex justify-between flex-col rounded-xl p-6 transition-all duration-500  w-full mx-auto hover:border-indigo-600 slide_active:border-indigo-600 hover:shadow-sm">

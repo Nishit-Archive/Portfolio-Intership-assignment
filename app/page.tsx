@@ -72,11 +72,11 @@ export default function Page() {
       <ScrollProgressIndicator />
       <Hero usersData={usersData} />
       <About />
-      <Services />
-      <Skills />
-      <TimeLine />
+      <Services usersData={usersData.user.services} />
+      <Skills skillsData={usersData.user.skills} />
+      <TimeLine userData={usersData.user.timeline} />
       <Projects />
-      <SliderTestimonial />
+      <SliderTestimonial usersData={usersData.user.testimonials} />
       <ContactForm usersData={usersData} />
     </div>
   );

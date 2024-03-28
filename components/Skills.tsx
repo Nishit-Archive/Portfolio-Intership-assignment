@@ -2,37 +2,30 @@
 import React, { useState, useEffect } from "react";
 import Section from "./Shared/Section";
 import Heading from "./Shared/Heading";
-import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SectionHeader } from "./Shared/SectionHeader";
 
-export default function Skills() {
-  const [skills, setSkills] = useState([]);
+interface Skill {
+  _id: string;
+  name: string;
+  percentage: number;
+  image: {
+    url: string;
+  };
+}
 
-  useEffect(() => {
-    async function fetchSkills() {
-      try {
-        const res = await fetch(
-          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
-        );
-        const data = await res.json();
-        setSkills(data.user.skills);
-      } catch (error) {
-        console.error("Error fetching skills:", error);
-      }
-    }
+interface SkillsProps {
+  skillsData: Skill[];
+}
 
-    fetchSkills();
-  }, []);
-
+export default function Skills({ skillsData }: SkillsProps) {
   return (
     <Section className="dark:bg-[#161a25]">
       <Heading title="Professional Skills" text="My Talent" />
 
       {/* Mapping over the skills array to render each skill */}
       <div className="grid my-10 gap-4 grid-col-1 lg:grid-cols-6 md:grid-cols-2 slide-in mx-5">
-        {skills.map((skill: any) => (
+        {skillsData.map((skill: any) => (
           <div
             key={skill._id}
             className="py-4 flex flex-col items-center justify-center sm:justify-start gap-4 bg-gray-50 dark:bg-slate-700 dark:hover:bg-gray-700 hover:bg-white dark:bg-darkPrimary dark:border-b hover:dark:border-sky-400 hover:dark:bg-darkSecondary border rounded-sm border-gray-300 dark:border-neutral-700"

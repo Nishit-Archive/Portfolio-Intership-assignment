@@ -5,29 +5,33 @@ import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-export default function Services() {
-  const [data, setData] = useState([]);
+interface Service {
+  _id: string;
+  name: string;
+  charge: string;
+  desc: string;
+  image: {
+    url: string;
+  };
+}
+
+interface ServicesProps {
+  usersData: {
+    map(
+      arg0: (service: any, index: number) => import("react").JSX.Element
+    ): import("react").ReactNode;
+    user: {
+      services: Service[];
+    };
+  };
+}
+
+export default function Services({ usersData }: ServicesProps) {
   const controls = useAnimation();
   const { ref, inView } = useInView({
     triggerOnce: true,
     rootMargin: "-100px 0px",
   });
-
-  useEffect(() => {
-    async function fetchTestimonials() {
-      try {
-        const response = await fetch(
-          "https://portfolio-backend-30mp.onrender.com/api/v1/get/user/65b3a22c01d900e96c4219ae"
-        );
-        const data = await response.json();
-        setData(data.user.services);
-        console.log(data.user.services);
-      } catch (error) {
-        console.error("Error fetching testimonials:", error);
-      }
-    }
-    fetchTestimonials();
-  }, []);
 
   useEffect(() => {
     if (inView) {
@@ -53,7 +57,7 @@ export default function Services() {
         <section className="">
           <div className="py-4 px-2 mx-auto max-w-screen-xl sm:py-4 lg:px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 h-full">
-              {data.map((service: any, index: number) => (
+              {usersData.map((service: any, index: number) => (
                 <div
                   key={service._id}
                   className="h-auto md:h-full flex flex-col hover:shadow-[0_0_1000px_0] dark:shadow-sky-400"
