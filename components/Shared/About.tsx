@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Section from "./Section";
 import Heading from "./Heading";
 import Image from "next/image";
-import { Facebook, Instagram, Twitter, X, Youtube } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
+import { TextGenerateEffect } from "../ui/text-generate-effect";
 
 export default function About({ userData }: any) {
   const textVariants = {
@@ -17,61 +18,82 @@ export default function About({ userData }: any) {
   };
 
   return (
-    <Section className="dark:bg-[#141820]">
-      <Heading title="About" text="About Me" />
-      <div id="about">
-        <section className="flex h-screen w-full">
-          <motion.div
-            className="flex items-center justify-center"
-            initial="hidden"
-            animate="visible"
-            variants={imageVariants}
-          >
-            <Image
-              src={userData.avatar.url}
-              alt={userData.name}
-              width={1920}
-              height={1080}
-              className="w-1/2 h-full object-cover shadow-[0_0_1000px_0]"
+    <Section id="about" className="bg-white dark:bg-gray-900 py-10 lg:py-20">
+      <Heading title="About Me" />
+
+      <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 px-4 md:px-8 lg:px-12 xl:px-20">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={imageVariants}
+          className="w-full lg:w-1/3 flex justify-center"
+        >
+          <Image
+            src={userData.avatar.url}
+            alt="avatar"
+            width={400}
+            height={400}
+            className="rounded-full"
+          />
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={textVariants}
+          className="w-full lg:w-2/3 flex flex-col items-center lg:items-start justify-center gap-5 text-center lg:text-left"
+        >
+          <h1 className="text-2xl font-bold dark:text-white h1">
+            {userData.subTitle}
+          </h1>
+          <p className="text-base dark:text-gray-300">
+            <TextGenerateEffect
+              className={`text-base dark:text-gray-300`}
+              words={userData.description}
             />
-          </motion.div>
-          <motion.div
-            className="flex-1 p-12"
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-          >
-            <h1 className="block text-2xl font-bold text-gray-800 sm:text-4xl lg:text-6xl lg:leading-tight dark:text-white">
-              {userData.subTitle}
-            </h1>
-            <p className="leading-7 [&:not(:first-child)]:mt-6">
-              {userData.description}
-            </p>
-            <div className="mt-6">
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold">Name</h3>
-                <p> {userData.name}</p>
-              </div>
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold">Email Address</h3>
-                <p> {userData.contactEmail}</p>
-              </div>
-              <div className="mb-4">
-                <h3 className="text-lg font-semibold">Phone Number</h3>
-                <p> {userData.phoneNumber}</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">Social Network</h3>
-                <div className="flex space-x-4 mt-2">
-                  <Facebook size={24} className="hover:text-blue-500" />
-                  <Instagram size={24} className="hover:text-pink-500" />
-                  <Twitter size={24} className="hover:text-blue-600" />
-                  <Youtube size={24} className="hover:text-red-500" />
-                </div>
+          </p>
+          <div className="mt-6 w-full">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold dark:text-gray-200">Name</h3>
+              <p className="dark:text-gray-400"> {userData.name}</p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold dark:text-gray-200">
+                Email Address
+              </h3>
+              <p className="dark:text-gray-400"> {userData.contactEmail}</p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold dark:text-gray-200">
+                Phone Number
+              </h3>
+              <p className="dark:text-gray-400"> {userData.phoneNumber}</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold dark:text-gray-200">
+                Social Network
+              </h3>
+              <div className="flex justify-center lg:justify-start space-x-4 mt-2">
+                <Facebook
+                  size={24}
+                  className="hover:text-blue-500 dark:hover:text-blue-400"
+                />
+                <Instagram
+                  size={24}
+                  className="hover:text-pink-500 dark:hover:text-pink-400"
+                />
+                <Twitter
+                  size={24}
+                  className="hover:text-blue-600 dark:hover:text-blue-400"
+                />
+                <Youtube
+                  size={24}
+                  className="hover:text-red-500 dark:hover:text-red-400"
+                />
               </div>
             </div>
-          </motion.div>
-        </section>
+          </div>
+        </motion.div>
       </div>
     </Section>
   );

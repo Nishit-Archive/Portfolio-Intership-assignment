@@ -67,9 +67,11 @@ export default function Hero({ usersData }: HeroProps) {
               {usersData?.user?.about?.name} <br />
               <span className="text-blue-600"> I am Software Developer</span>
             </h1>
-            <p className="leading-7 [&:not(:first-child)]:mt-6">
-              {usersData?.user?.about?.description}
-              {/* <TextGenerateEffect words={data?.user?.about?.description} /> */}
+            <p className="">
+              <TextGenerateEffect
+                words={usersData?.user?.about?.description}
+                className={`leading-7 [&:not(:first-child)]:mt-6`}
+              />
             </p>
 
             {/* <!-- Buttons --> */}

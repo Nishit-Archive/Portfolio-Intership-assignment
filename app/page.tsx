@@ -71,7 +71,9 @@ export default function Page() {
       <Navbar />
       <ScrollProgressIndicator />
       <Hero usersData={usersData} />
+
       <About userData={usersData.user.about} />
+
       <Services usersData={usersData.user.services} />
       <Skills skillsData={usersData.user.skills} />
       <TimeLine userData={usersData.user.timeline} />

@@ -7,8 +7,8 @@ export const TextGenerateEffect = ({
   words,
   className,
 }: {
-  words: string;
-  className?: string;
+  words: any;
+  className?: any;
 }) => {
   const [scope, animate] = useAnimate();
   let wordsArray = words.split(" ");
@@ -28,7 +28,7 @@ export const TextGenerateEffect = ({
   const renderWords = () => {
     return (
       <motion.div ref={scope}>
-        {wordsArray.map((word, idx) => {
+        {wordsArray.map((word: any, idx: any) => {
           return (
             <motion.span
               key={word + idx}
@@ -43,9 +43,9 @@ export const TextGenerateEffect = ({
   };
 
   return (
-    <div className={cn("font-bold", className)}>
+    <div className={cn("font-medium", className)}>
       <div className="mt-4">
-        <div className=" mt-3 text-lg text-gray-800 dark:text-gray-400">
+        <div className=" mt-3 sm:text-sm  lg:text-lg xl:text-xl leading-7 [&:not(:first-child)]:mt-6 text-gray-800 dark:text-gray-400">
           {renderWords()}
         </div>
       </div>
