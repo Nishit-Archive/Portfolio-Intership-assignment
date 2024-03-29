@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 import { ModeToggle } from "./ModeToggle";
 import Link from "next/link";
 
-// Define a type for the link objects
 type NavLink = {
   href: string;
   label: string;
   ariaCurrent?: "page";
 };
 
-// Define your links
 const navLinks: NavLink[] = [
   { href: "#", label: "Home", ariaCurrent: "page" },
   { href: "#services", label: "Services" },
@@ -22,6 +20,7 @@ const navLinks: NavLink[] = [
 
 export default function Navbar() {
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,7 +40,7 @@ export default function Navbar() {
       className={`sticky top-0 z-50 w-full ${
         hasScrolled
           ? "bg-[rgba(255,255,255,0.1)] dark:bg-gray-900 backdrop-blur-lg border-b border-gray-200 dark:border-gray-600 text-black"
-          : "bg-transparent "
+          : "bg-transparent"
       } text-sm py-3 sm:py-0 transition-all duration-300`}
     >
       <nav
@@ -56,11 +55,33 @@ export default function Navbar() {
           >
             Portfolio
           </Link>
-          <div className="sm:hidden">{/* Mobile menu button */}</div>
+          <button
+            className="sm:hidden"
+            aria-label="Open menu"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {/* Hamburger icon */}
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
         </div>
         <div
           id="navbar-collapse-with-animation"
-          className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
+          className={`${
+            isMobileMenuOpen ? "block" : "hidden"
+          } overflow-hidden transition-all duration-300 basis-full grow sm:block`}
         >
           <div className="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
             {navLinks.map((link) => (
