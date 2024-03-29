@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ModeToggle } from "./ModeToggle";
 import Link from "next/link";
+import { FaHamburger } from "react-icons/fa";
 
 type NavLink = {
   href: string;
@@ -61,20 +62,7 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {/* Hamburger icon */}
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
+            <FaHamburger className="text-2xl text-gray-500 dark:text-gray-400" />
           </button>
         </div>
         <div
